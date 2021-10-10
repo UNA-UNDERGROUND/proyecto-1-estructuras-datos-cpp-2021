@@ -37,26 +37,26 @@ template <typename T> class Heap : private ListaDoble<T> {
 
   public:
 	Heap() = default;
-	explicit Heap(std::initializer_list<T> l) : ListaDoble<T>(l) { heapify(); }
-	explicit Heap(Heap<T> &&heap) : ListaDoble<T>(heap) { heapify(); }
-	explicit Heap(Heap<T> &heap) : ListaDoble<T>(heap) { heapify(); }
-	explicit Heap(ListaDoble<T> &&v) : ListaDoble<T>(v) { heapify(); }
-	explicit Heap(ListaDoble<T> &v) : ListaDoble<T>(v) { heapify(); }
+	explicit Heap(std::initializer_list<T> l) : ListaDoble<T>(l) { Heapify(); }
+	explicit Heap(Heap<T> &&heap) : ListaDoble<T>(heap) { Heapify(); }
+	explicit Heap(Heap<T> &heap) : ListaDoble<T>(heap) { Heapify(); }
+	explicit Heap(ListaDoble<T> &&v) : ListaDoble<T>(v) { Heapify(); }
+	explicit Heap(ListaDoble<T> &v) : ListaDoble<T>(v) { Heapify(); }
 
 	size_t size() const { return ListaDoble<T>::size(); }
 	bool empty() const { return size() == 0; }
 
-	void push(T &valor, bool ordenMayor = true) {
+	void Insertar(T &valor, bool ordenMayor = true) {
 		ListaDoble<T>::push_back(valor);
 		size_t indice = size() - 1;
 		heapify_up(indice, ordenMayor);
 	}
-	void push(T &&valor) {
+	void Insertar(T &&valor) {
 		ListaDoble<T>::push_back(valor);
 		size_t indice = size() - 1;
 		heapify_up(indice);
 	}
-	void pop() {
+	void Eliminar() {
 		if (empty()) {
 			throw std::underflow_error("no hay elementos en el Heap");
 		}
@@ -82,24 +82,24 @@ template <typename T> class Heap : private ListaDoble<T> {
 
 	T &operator[](size_t pos) { return ListaDoble<T>::at(pos); }
 
-	explicit Heap &operator=(Heap<T> &&heap) {
+	explicit Heap<T> &operator=(Heap<T> &&heap) {
 		ListaDoble<T>::operator=(heap);
-		heapify();
+		Heapify();
 	}
-	explicit Heap &operator=(Heap<T> &heap) {
+	explicit Heap<T> &operator=(Heap<T> &heap) {
 		ListaDoble<T>::operator=(heap);
-		heapify();
+		Heapify();
 	}
-	explicit Heap &operator=(ListaDoble<T> &&v) {
+	explicit Heap<T> &operator=(ListaDoble<T> &&v) {
 		ListaDoble<T>::operator=(v);
-		heapify();
+		Heapify();
 	}
-	explicit Heap &operator=(ListaDoble<T> &v) {
+	explicit Heap<T> &operator=(ListaDoble<T> &v) {
 		ListaDoble<T>::operator=(v);
-		heapify();
+		Heapify();
 	}
 
-	Heap &heapify(bool ordenMayor = true) {
+	Heap &Heapify(bool ordenMayor = true) {
 		if (size()) {
 			for (int i = size() / 2 - 1; i >= 0; i--) {
 				heapify_down(i, ordenMayor);
@@ -110,5 +110,9 @@ template <typename T> class Heap : private ListaDoble<T> {
 			}
 		}
 		return *this;
+	}
+
+	Heap<T> crearHeap(ListaDoble<T> lista){
+		return Heap<T>(lista);
 	}
 };
