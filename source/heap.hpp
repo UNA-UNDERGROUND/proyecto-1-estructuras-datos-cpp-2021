@@ -1,5 +1,5 @@
 #pragma once
-#include <lista_doble.hpp>
+#include "lista_doble.hpp"
 
 template <typename T> class Heap : private ListaDoble<T> {
 	size_t getPadre(size_t pos) { return (pos - 1) / 2; }
@@ -82,19 +82,19 @@ template <typename T> class Heap : private ListaDoble<T> {
 
 	T &operator[](size_t pos) { return ListaDoble<T>::at(pos); }
 
-	explicit Heap<T> &operator=(Heap<T> &&heap) {
+	Heap &operator=(Heap<T> &&heap) {
 		ListaDoble<T>::operator=(heap);
 		Heapify();
 	}
-	explicit Heap<T> &operator=(Heap<T> &heap) {
+	Heap &operator=(Heap<T> &heap) {
 		ListaDoble<T>::operator=(heap);
 		Heapify();
 	}
-	explicit Heap<T> &operator=(ListaDoble<T> &&v) {
+	Heap &operator=(ListaDoble<T> &&v) {
 		ListaDoble<T>::operator=(v);
 		Heapify();
 	}
-	explicit Heap<T> &operator=(ListaDoble<T> &v) {
+	Heap &operator=(ListaDoble<T> &v) {
 		ListaDoble<T>::operator=(v);
 		Heapify();
 	}
@@ -112,7 +112,7 @@ template <typename T> class Heap : private ListaDoble<T> {
 		return *this;
 	}
 
-	Heap<T> crearHeap(ListaDoble<T> lista){
-		return Heap<T>(lista);
+	Heap&& crearHeap(ListaDoble<T> lista){
+		return Heap(lista);
 	}
 };

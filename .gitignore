@@ -5,6 +5,8 @@ build/
 #ignorar visual studio
 .vs/
 out/
+Debug/
+source/Debug
 #ignorar archivos de clangd
 .clangd
 .cache

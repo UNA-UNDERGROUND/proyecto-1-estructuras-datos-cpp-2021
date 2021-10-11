@@ -191,8 +191,8 @@ template <typename T> class ListaDoble {
 		}
 		// c++ 17, pre c++17 puede declarar uno de los 2 afuera
 		bool reversa = pos > len / 2;
-		for (auto [n, i] =
-		         std::tuple{reversa ? ultimo : inicio, reversa ? len - 1 : 0};
+		size_t i = reversa ? len - 1 : 0;
+		for (auto n = reversa ? ultimo : inicio;
 		     n; (reversa ? i-- : i++),
 		              n = (reversa ? n->getAnterior() : n->getSiguiente())) {
 			if (i == pos) {
@@ -240,7 +240,7 @@ template <typename T> class ListaDoble {
 		}
 	};
 
-	ListaDoble operator=(const ListaDoble &l) {
+	ListaDoble& operator=(const ListaDoble &l) {
 		clear();
 
 		nodo *otro = l.inicio;
@@ -256,7 +256,7 @@ template <typename T> class ListaDoble {
 		ultimo = actual;
 		return *this;
 	}
-	ListaDoble operator=(ListaDoble &&l) noexcept {
+	ListaDoble& operator=(ListaDoble &&l) noexcept {
 		clear();
 		inicio = l.inicio;
 		ultimo = l.ultimo;
