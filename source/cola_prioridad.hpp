@@ -1,30 +1,29 @@
 #include "heap.hpp"
 
-template <typename T> class colaPrioridad : private Heap<T> {
+template <typename T> class colaPrioridad {
   private:
-	bool menor = false;
+	bool mayor = false;
+	Heap<T> heap;
 
   public:
-	using Heap<T>::Heap;
-	colaPrioridad(bool menor = false) : menor(menor) {}
+	colaPrioridad(ListaDoble<T>& lista, bool mayor = false): colaPrioridad(mayor){
+		heap = Heap<T>::crearHeap(lista);
+	}
+	colaPrioridad(bool mayor = false) : mayor(mayor) {}
 	void insertar(T elem) {
-		for (size_t i = 0; i < Heap<T>::size(); i++) {
-			T val = Heap<T>::at(i);
-			// cada clase es responsable de sobrecargar su operador
-			if (menor ? elem < val : elem > val) {
-				Heap<T>::insertar(elem, i);
-				return;
-			}
-		}
-		Heap<T>::insertarFinal(elem);
+		heap.Insertar(elem, mayor);
 	}
 	T recuperar() {
-		T val = Heap<T>::at(0);
-		Heap<T>::eliminarInicio();
+		T val = heap.top();
+		pop();
 		return val;
 	}
     void pop(){
-        Heap<T>::eliminarInicio();
+		heap.Eliminar();
     }
-	bool vacio() { return Heap<T>::size() == 0; }
+	bool vacio() { return heap.size() == 0; }
+
+	template <typename T> bool compara(T& obj_a, T& obj_b) { 
+		return (obj_a > obj_b) ? true : false; 
+	}
 };

@@ -60,6 +60,9 @@ template <typename T> class ListaDoble {
 			if (anterior) {
 				anterior->setSiguiente(actual);
 			}
+			else if (pos == 0) {
+				inicio = actual;
+			}
 			otro = otro->getSiguiente();
 		}
 		ultimo = actual;
@@ -242,14 +245,17 @@ template <typename T> class ListaDoble {
 
 	ListaDoble& operator=(const ListaDoble &l) {
 		clear();
-
+		len = l.len;
 		nodo *otro = l.inicio;
 		nodo *actual = inicio;
-		for (size_t pos = 0; pos < l.len; pos++) {
+		for (size_t pos = 0; pos < len; pos++) {
 			actual = new nodo(otro->getValor(), nullptr, actual);
 			nodo *anterior = actual->getAnterior();
 			if (anterior) {
 				anterior->setSiguiente(actual);
+			}
+			else if (pos == 0) {
+				inicio = actual;
 			}
 			otro = otro->getSiguiente();
 		}

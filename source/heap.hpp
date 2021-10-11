@@ -85,18 +85,22 @@ template <typename T> class Heap : private ListaDoble<T> {
 	Heap &operator=(Heap<T> &&heap) {
 		ListaDoble<T>::operator=(heap);
 		Heapify();
+		return *this;
 	}
 	Heap &operator=(Heap<T> &heap) {
 		ListaDoble<T>::operator=(heap);
 		Heapify();
+		return *this;
 	}
 	Heap &operator=(ListaDoble<T> &&v) {
 		ListaDoble<T>::operator=(v);
 		Heapify();
+		return *this;
 	}
 	Heap &operator=(ListaDoble<T> &v) {
 		ListaDoble<T>::operator=(v);
 		Heapify();
+		return *this;
 	}
 
 	Heap &Heapify(bool ordenMayor = true) {
@@ -112,7 +116,7 @@ template <typename T> class Heap : private ListaDoble<T> {
 		return *this;
 	}
 
-	Heap&& crearHeap(ListaDoble<T> lista){
+	static Heap crearHeap(ListaDoble<T>& lista){
 		return Heap(lista);
 	}
 };
